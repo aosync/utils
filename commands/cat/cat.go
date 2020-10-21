@@ -6,6 +6,26 @@ import (
 	"os"
 )
 
+func FromFile(path string, buf []byte) error {
+	f, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	r := bufio.NewReader(f)
+
+	for {
+		n, err := r.Read(buf)
+		if err != nil {
+			break
+		}
+		fmt.Print(string(buf[:n]))
+	}
+
+	return nil
+}
+
 func FromStdin() {
 	var input string
 	fmt.Scanln(&input)
@@ -39,22 +59,11 @@ func main() {
 		if a == "-" {
 			FromStdin()
 		} else {
-			f, err := os.Open(a)
+			err := FromFile(a, buf)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "cat: %s not found\n", a)
 				code = 1
 				continue
-			}
-			defer f.Close()
-
-			r := bufio.NewReader(f)
-
-			for {
-				n, err := r.Read(buf)
-				if err != nil {
-					break
-				}
-				fmt.Print(string(buf[:n]))
 			}
 		}
 	}
