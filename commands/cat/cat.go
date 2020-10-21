@@ -1,8 +1,8 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
+	"io"
 	"os"
 )
 
@@ -13,23 +13,12 @@ func FromFile(path string, buf []byte) error {
 	}
 	defer f.Close()
 
-	r := bufio.NewReader(f)
-
-	for {
-		n, err := r.Read(buf)
-		if err != nil {
-			break
-		}
-		fmt.Print(string(buf[:n]))
+	_, err = io.CopyBuffer(os.Stdout, f, buf)
+	if err != nil {
+		return err
 	}
 
 	return nil
-}
-
-func FromStdin() {
-	var input string
-	fmt.Scanln(&input)
-	fmt.Println(input)
 }
 
 func main() {
@@ -50,20 +39,23 @@ func main() {
 
 	/* read stdin if no arg */
 	if len(opts) == 0 {
-		for {
-			FromStdin()
+		if _, err := io.CopyBuffer(os.Stdout, os.Stdin, buf); err != nil {
+			fmt.Fprintf(os.Stderr, "cat: cannot read from stdin")
+			code = 1
 		}
 	}
 
 	for _, a := range opts {
 		if a == "-" {
-			FromStdin()
+			if _, err := io.CopyBuffer(os.Stdout, os.Stdin, buf); err != nil {
+				fmt.Fprintf(os.Stderr, "cat:-: cannot read from stdin")
+				code = 1
+			}
 		} else {
 			err := FromFile(a, buf)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "cat: %s not found\n", a)
 				code = 1
-				continue
 			}
 		}
 	}
