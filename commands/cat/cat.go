@@ -1,4 +1,4 @@
-package main
+package cat
 
 import (
 	"fmt"
@@ -6,7 +6,10 @@ import (
 	"os"
 )
 
-func FromFile(path string, buf []byte) error {
+var code int = 0
+var buf []byte
+
+func FromFile(path string) error {
 	f, err := os.Open(path)
 	if err != nil {
 		return err
@@ -21,12 +24,7 @@ func FromFile(path string, buf []byte) error {
 	return nil
 }
 
-func main() {
-	code := 0
-	var buf []byte
-
-	opts := os.Args[1:]
-
+func Cat(opts []string) int {
 	/* -u: unbuffered mode */
 	if len(opts) > 0 {
 		if opts[0] == "-u" {
@@ -52,7 +50,7 @@ func main() {
 				code = 1
 			}
 		} else {
-			err := FromFile(a, buf)
+			err := FromFile(a)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "cat: %s not found\n", a)
 				code = 1
@@ -60,5 +58,5 @@ func main() {
 		}
 	}
 
-	os.Exit(code)
+	return code
 }

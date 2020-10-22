@@ -1,19 +1,19 @@
-package main
+package yes
 
 import (
 	"fmt"
-	"os"
 	"strings"
 )
 
-func main() {
+func Yes(opts []string) int {
 	y := "y"
 
-	if len(os.Args) > 1 {
-		y = strings.Join(os.Args[1:], " ")
+	if len(opts) > 0 {
+		y = strings.Join(opts, " ")
 	}
 
 	for {
 		fmt.Println(y)
 	}
+	return 0
 }
