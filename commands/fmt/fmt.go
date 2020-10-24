@@ -1,7 +1,6 @@
 package fmt
 
 import (
-	//"bufio"
 	"fmt"
 	"io/ioutil"
 	"os"
