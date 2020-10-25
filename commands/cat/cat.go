@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"utils/xbd"
 )
 
 var code int = 0
@@ -25,14 +26,15 @@ func FromFile(path string) error {
 }
 
 func Cat(opts []string) int {
+	rs := []xbd.OptRule{xbd.OptRule{'u', false}}
+	e, o := xbd.GetOpts(opts, rs)
+	opts = o
+
 	/* -u: unbuffered mode */
-	if len(opts) > 0 {
-		if opts[0] == "-u" {
-			buf = make([]byte, 1)
-			opts = opts[1:]
-		} else {
-			buf = make([]byte, 4096)
-		}
+	if b, _ := xbd.Encountered(e, 'u'); b {
+		buf = make([]byte, 1)
+	} else {
+		buf = make([]byte, 4096)
 	}
 
 	/* read stdin if no arg */
