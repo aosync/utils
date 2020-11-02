@@ -14,6 +14,7 @@ var p = false
 
 func errAt(where string, err string) {
 	fmt.Fprintf(os.Stderr, "rmdir:%s: %s\n", where, err)
+	code = 1
 }
 
 func rmdir(where string) {
@@ -24,7 +25,6 @@ func rmdir(where string) {
 		e := syscall.Rmdir(where)
 		if e != nil {
 			errAt(where, e.Error())
-			code = 1
 		}
 	}
 }
@@ -35,7 +35,6 @@ func rmdirPath(where string) {
 		e := syscall.Rmdir(where)
 		if e != nil {
 			errAt(where, e.Error())
-			code = 1
 		}
 		where = path.Dir(where)
 	}
