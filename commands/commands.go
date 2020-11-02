@@ -4,6 +4,7 @@ import (
 	"utils/commands/cat"
 	"utils/commands/fmt"
 	"utils/commands/mkdir"
+	"utils/commands/rmdir"
 	"utils/commands/yes"
 )
 
@@ -15,6 +16,8 @@ func Execute(name string, opts []string) int {
 		return fmt.Fmt(opts)
 	case "mkdir":
 		return mkdir.Mkdir(opts)
+	case "rmdir":
+		return rmdir.Rmdir(opts)
 	case "yes":
 		return yes.Yes(opts)
 	case "utils":
