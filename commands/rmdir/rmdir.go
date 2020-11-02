@@ -35,6 +35,7 @@ func rmdirPath(where string) {
 		e := syscall.Rmdir(where)
 		if e != nil {
 			errAt(where, e.Error())
+			return
 		}
 		where = path.Dir(where)
 	}
