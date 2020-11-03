@@ -5,6 +5,7 @@ import (
 	"utils/commands/fmt"
 	"utils/commands/mkdir"
 	"utils/commands/rmdir"
+	"utils/commands/sleep"
 	"utils/commands/yes"
 )
 
@@ -18,6 +19,8 @@ func Execute(name string, opts []string) int {
 		return mkdir.Mkdir(opts)
 	case "rmdir":
 		return rmdir.Rmdir(opts)
+	case "sleep":
+		return sleep.Sleep(opts)
 	case "yes":
 		return yes.Yes(opts)
 	case "utils":
