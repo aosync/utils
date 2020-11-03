@@ -7,8 +7,6 @@ import (
 	"time"
 )
 
-var code = 0
-
 /*
 	To consider: add nonstandard unit handling
 */
@@ -24,5 +22,5 @@ func Sleep(opts []string) int {
 		return 1
 	}
 	time.Sleep(time.Second * time.Duration(d))
-	return code
+	return 0
 }
