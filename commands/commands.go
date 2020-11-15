@@ -16,8 +16,6 @@ func Execute(name string, opts []string) int {
 		return cat.Cat(opts)
 	case "fmt":
 		return fmt.Fmt(opts)
-	case "mkdir":
-		return mkdir.Mkdir(opts)
 	case "nice":
 		return nice.Nice(opts)
 	case "rmdir":
