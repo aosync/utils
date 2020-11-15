@@ -20,7 +20,6 @@ PRs are welcome, even if implementing an entire new utility.
 ## incomplete
 
 - any utility not in main branch
-- `mkdir`
 
 ## high priority
 
